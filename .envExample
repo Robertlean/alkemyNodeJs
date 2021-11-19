@@ -1,0 +1,8 @@
+#Copy this file, replace its name to .env and set the project env variables with your data#
+
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+JWT_SECRET=
+SENDGRID_KEY=
+SENDGRID_EMAIL=

@@ -55,5 +55,14 @@ module.exports= {
             res.status(400).json(response)
         }
     },
-    
+    login: (req, res) => {
+        const errors = validationResult(req);
+        if(errors.isEmpty()){
+            db.users.findOne({
+                where: {
+                    email: req.body.email
+                }
+            })
+        }
+    }
 }
