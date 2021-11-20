@@ -63,6 +63,37 @@ module.exports= {
                     email: req.body.email
                 }
             })
+            .then( user => {
+                if(!user){
+                    return Promise.rejected()
+                }else{
+                    const expireToken = 300;
+                    const session = {
+                        id: user.id,
+                        name: user.email
+                    }
+                    const token = jwt.sign(session, process.env.JWT_SECRET, {expiresIN: expireToken})
+                    const response = {
+                        status: 200,
+                        msg: `welcome ${user.email}`,
+                        "expire in": `${exprieToken / 60} min`,
+                        token: token
+                    };
+                    res.status(200).json(response)
+                }
+            }).catch(error => {
+                const response = {
+                    status: 401,
+                    msg: "Imvalid credentials"
+                }
+                res.status(401).json(response)
+            })
+        }else{
+            const response = {
+                status:401,
+                msg: "Invalid credentials"
+            }
+            res.status(401).json(response)
         }
     }
 }
