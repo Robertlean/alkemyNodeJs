@@ -38,12 +38,13 @@ module.exports = (sequelize, dataTypes) => {
             as: "gender",
             foreugnKey: "genderId"
         })
+        Movie.belongsToMany(models.characters,{
+            as: "characters",
+            through: "characterMovie",
+            foreignKey: "movieId",
+            otherKey: "characterId"
+        })
     }
-    Movie.belongsToMany(models.character,{
-        as: "characters",
-        through: "characterMovie",
-        foreignKey: "movieId",
-        otherKey: "characterId"
-    })
+    
     return Movie
 }

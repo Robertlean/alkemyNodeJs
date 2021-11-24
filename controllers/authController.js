@@ -42,7 +42,7 @@ module.exports= {
             })
             .catch( error =>{
                 const response = {
-                    status = 500,
+                    status: 500,
                     msg: "Internal server error please try letter"
                 }
             })
