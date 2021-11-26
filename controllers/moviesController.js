@@ -52,26 +52,26 @@ module.exports = {
             db.movies.findByPk(req.params.moviesid,{
                 include: [
                     {association: "gender"},
-                    {association: "characer",attributes: ["id", "image", "name"]}
+                    {association: "character",attributes: ["id", "image", "name"]}
                 ]
             })
             .then(movie => {
                 if(!movie){
                     return Promise.reject()
                 }
-                movie.image = `http://${req.get("host")}/movies/${movie.image}`
+                movie.image = `http://localhost/movies/${movie.image}`
                 movie.dataValues.genderID = undefined
-                movie.gender.image = `http://${req.get("host")}/genders/${movie.gender.image}`
-                movie.characters.forEach(character => character.image = `http://${req.get("host")}/characters/${character.image}`)
+                movie.gender.image = `http://localhost/genders/${movie.gender.image}`
+                movie.characters.forEach(character => character.image = `http://localhost/characters/${character.image}`)
                 movie.dataValues.character.forEach(character => {
                     character.dataValues.characterMovie = undefined
-                    character.dataValues.url = `http://${req.get("host")}/character/${character.id}`
+                    character.dataValues.url = `http://localhost/character/${character.id}`
                     character.dataValues.id = undefined
                 })
                 const response = {
                     meta: {
                         status: 200,
-                        url: `http://${req.get("host"),req.originalUrl}`,
+                        url: `http://${req.get("host")}${req.originalUrl}`,
                         CharacterQuantity: movie.characters.length
                     },
                     movie: movie
@@ -112,15 +112,15 @@ module.exports = {
                 res.status(201).json(response)
             })
             .catch(error => {
-                req.file ? fs.inlinkSync(path.join(__dirname,"../puloads/movies", req.file.filename)) : null;
+                req.file ? fs.inlinkSync(path.join(__dirname,"../images/movies", req.file.filename)) : null;
                 const response = {
                     status: 500,
-                    msg: "Internal server error"
+                    msg: "Internal server error aqui"
                 }
                 res.status(500).json(response)
             })
         }else{
-            req.file ? fs.inlinkSync(path.join(__dirname,"../puloads/movies", req.file.filename)) : null;
+            req.file ? fs.inlinkSync(path.join(__dirname,"../images/movies", req.file.filename)) : null;
             const response = {
                 status: 400,
                 msg: "Error when creating the movie",
@@ -131,7 +131,7 @@ module.exports = {
     },
     update: (req, res) => {
         let oldImage;
-        const error = valiationResult(req);
+        const errors = valiationResult(req);
         db.movies.findByPk(req.params,moviesid)
         .then(movie => {
             if(!movie){
@@ -140,7 +140,7 @@ module.exports = {
             if(errors.isEmpty()){
                 oldImage = movie.image
                 db.movies.update({
-                    image: req-file ? req.file.filename : movie.image,
+                    image: req.file ? req.file.filename : movie.image,
                     title: req.body.title,
                     creationDate: req.body.creationDate,
                     rating: +req.body.rating,
@@ -151,7 +151,7 @@ module.exports = {
                     }
                 })
                 .then(updatedMovie => {
-                    req.file ? fs.inlinkSync(path.join(__dirname,"../puloads/movies", oldImage)) : null;
+                    req.file ? fs.inlinkSync(path.join(__dirname,"../images/movies", oldImage)) : null;
                     const response = {
                         status: 200,
                         msg: "Movie updated successfully",
@@ -160,7 +160,7 @@ module.exports = {
                     res.status(200).json(response)
                 })
                 .catch(error =>{
-                    req.file ? fs.inlinkSync(path.join(__dirname,"../puloads/movies", req.file.filename)) : null;
+                    req.file ? fs.inlinkSync(path.join(__dirname,"../images/movies", req.file.filename)) : null;
                     const response = {
                         status: 500,
                         msg: "Inernal server error"
@@ -168,7 +168,7 @@ module.exports = {
                     res.status(500).json(response)
                 })
             }else{
-                req.file ? fs.inlinkSync(path.join(__dirname,"../puloads/movies", req.file.filename)) : null;
+                req.file ? fs.inlinkSync(path.join(__dirname,"../images/movies", req.file.filename)) : null;
                 const reponse = {
                     status: 400,
                     msg: "Error when updated the movie",
@@ -178,7 +178,7 @@ module.exports = {
             }
         })
         .catch(error => {
-            req.file ? fs.inlinkSync(path.join(__dirname,"../puloads/movies", req.file.filename)) : null;
+            req.file ? fs.inlinkSync(path.join(__dirname,"../images/movies", req.file.filename)) : null;
             const response = {
                 status: 400,
                 msg: "The movie doesn't exist"
@@ -193,7 +193,7 @@ module.exports = {
                 if(!movie){
                     return Promise.reject()
                 }
-                req.file ? fs.inlinkSync(path.join(__dirname,"../puloads/movies", req.file.filename)) : null;
+                req.file ? fs.inlinkSync(path.join(__dirname,"../images/movies", req.file.filename)) : null;
                 db.movies.destroy({
                     where: {
                         id: movie.id

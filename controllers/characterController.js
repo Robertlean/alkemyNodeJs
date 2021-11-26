@@ -13,7 +13,7 @@ module.exports={
                 association: "movies",
                 where: {
                     id: {
-                        [Op-substring]: req.query.movie ? req.query.movie: ""
+                        [Op.substring]: req.query.movie ? req.query.movie: ""
                     }
                 }
             }]: null,
@@ -32,20 +32,20 @@ module.exports={
                 ["name", req.query.order && req.query.order.toUpperCase() == "DESC" ? req.query.order: "ASC"]
             ]
         })
-        .then( chararters => {
-            character.forEach(char => {
-                char.image = `${req.protocol}://${req.get("host")}/characters/${char.image}`;
-                char.dataValues.url = `${req.protocol}://${req.get("host")}/characters/${char.id}`;
+        .then( characters => {
+            characters.forEach(char => {
+                char.image = `http://${req.get("host")}/characters/${char.image}`;
+                char.dataValues.url = `http://${req.get("host")}/characters/${char.id}`;
                 char.dataValues.id = undefined;
                 char.dataValues.movies = undefined;
             });
             const response = {
                 meta: {
                     status: 200,
-                    url: `${req.protocol}://${req.get("host"),req.originalUrl}`,
-                    characterQuantity: char.length
+                    url: `http://${req.get("host"),req.originalUrl}`,
+                    characterQuantity: characters.length
                 },
-                chararters: characters.length > 0 ? characters : "there are not charactes with these conditions"
+                characters: characters.length > 0 ? characters : "there are not charactes with these conditions"
             }
             res.status(200).json(response)
         })

@@ -9,7 +9,7 @@ module.exports = [
         if(!req.file && req.method != "PUT"){
             throw new Error('required')
         }
-        id(req.file && !extensions.includes(path.extname(req.file.originalname))){
+        if(req.file && !extensions.includes(path.extname(req.file.originalname))){
             throw new Error('Format error')
         }
         return true

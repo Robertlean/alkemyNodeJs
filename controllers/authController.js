@@ -45,6 +45,7 @@ module.exports= {
                     status: 500,
                     msg: "Internal server error please try letter"
                 }
+                res.status(500).json(response)
             })
         }else{
             const response = {

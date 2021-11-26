@@ -18,7 +18,7 @@ module.exports = [
     body('creationDate').notEmpty().withMessage("required").isDate().withMessage("Format error"),
     body('rating').notEmpty().withMessage("required").isInt({min: 1, max: 5}).withMessage("Format error"),
     body('genderId').notEmpty().withMessage("required").isInt().withMessage("Format error").custom((value, {req}) =>{
-        return fb.genders.findByPk(value)
+        return db.genders.findByPk(value)
         .then(gender =>{
             if(!gender){
                 return Promise.reject();

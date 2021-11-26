@@ -3,7 +3,7 @@ const db = require('../database/models')
 
 module.exports = [
     body('email').notEmpty().withMessage("required").isEmail().withMessage("Format error").custom((value, {req})=>{
-        return db.userrs.findOne({
+        return db.users.findOne({
             where: {
                 email: value
             }

@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const env = require("dotenv").config();
-//const auth = require('./middlewares/auth')
+const auth = require('./middlewares/auth')
 
 
 const swaggerUi = require('swagger-ui-express');
@@ -24,10 +24,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(auth);
+
 //app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth",authRouter);
-
-//app.use(auth);
 
 app.use("/movies", moviesRouter);
 app.use("/characters", charactersRouter);
