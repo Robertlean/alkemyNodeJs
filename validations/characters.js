@@ -5,7 +5,7 @@ const db = require('../database/models');
 
 module.exports = [
     body('image').custom((value, {req}) => {
-        let extensions = ['.jpg', '.pmg', '.gif', '.webp']
+        let extensions = ['.jpg', '.png', '.gif', '.webp']
         if(!req.file && req.method != "PUT"){
             throw new Error('required')
         }

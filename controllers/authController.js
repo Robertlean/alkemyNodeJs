@@ -77,7 +77,7 @@ module.exports= {
                     const response = {
                         status: 200,
                         msg: `welcome ${user.email}`,
-                        "expire in": `${exprieToken / 60} min`,
+                        "expire in": `${exprireToken / 60} min`,
                         token: token
                     };
                     res.status(200).json(response)
@@ -85,7 +85,7 @@ module.exports= {
             }).catch(error => {
                 const response = {
                     status: 401,
-                    msg: "Imvalid credentials"
+                    msg: "Invalid credentials"
                 }
                 res.status(401).json(response)
             })

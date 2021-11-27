@@ -42,10 +42,10 @@ module.exports={
             const response = {
                 meta: {
                     status: 200,
-                    url: `http://${req.get("host"),req.originalUrl}`,
+                    url: `http://${req.get("host")}${req.originalUrl}`,
                     characterQuantity: characters.length
                 },
-                characters: characters.length > 0 ? characters : "there are not charactes with these conditions"
+                characters: characters.length > 0 ? characters : "There are not charactes with these conditions"
             }
             res.status(200).json(response)
         })
@@ -59,22 +59,22 @@ module.exports={
     },
     detail: (req, res) =>{
         if (!isNan(req.params.charid)){
-            db.character.findByPk(req.params.charid,{
+            db.characters.findByPk(req.params.charid,{
                 include: [{association:'movies', attributes:['id', 'image', 'title']}]
             })
             .then(char => {
-                char.image = `${req.protocol}://${req.get("host")}/characters/${char.image}`;
-                char.movies.forEach(movie => movie.image = `${req.protocol}://${req.get("host")}/movies/${movie.image}`)
+                char.image = `http://${req.get("host")}/characters/${char.image}`;
+                char.movies.forEach(movie => movie.image = `http://${req.get("host")}/movies/${movie.image}`)
                 char.dataValues.movies.forEach(movie => {
                     movie.dataValues.characterMovie = undefined;
-                    movie.dataValues.url = `${req.protocol}://${req.get("host")}/movies/${movie.id}`;
+                    movie.dataValues.url = `http://${req.get("host")}/movies/${movie.id}`;
                     movie.dataValues.id = undefined
                 })
                 const respone = {
                     meta: {
                         status: 200,
-                        url: `${req.protocol}://${req.get("host"),req.originalUrl}`,
-                        moviesQuantity: character.movies.length
+                        url: `http://${req.get("host"),req.originalUrl}`,
+                        moviesQuantity: char.movies.length
                     },
                     character: character
                 }
@@ -114,7 +114,7 @@ module.exports={
                 res.status(201).json(response)
             })
             .catch(error => {
-                req.file ? fs.unlinkSync(path.join(__dirname,"..","uploads", "characters",req.file.filename)): null
+                req.file ? fs.unlinkSync(path.join(__dirname,"..","images", "characters",req.file.filename)): null
                 const response = {
                     status: 500,
                     msg: "Internal server error"
@@ -122,7 +122,7 @@ module.exports={
                 res.status(500).json(response)
             })
         }else{
-            req.file ? fs.unlinkSync(path.join(__dirname,"..","uploads", "characters",req.file.filename)): null;
+            req.file ? fs.unlinkSync(path.join(__dirname,"..","images", "characters",req.file.filename)): null;
             const response = {
                 status: 400,
                 msg: "Error when creating the character",
@@ -151,16 +151,16 @@ module.exports={
                     }
                 })
                 .then(result => {
-                    req.file ? fs.unlinkSync(path.join(__dirname, "..","uploads","characters",oldImage)): null
+                    req.file ? fs.unlinkSync(path.join(__dirname, "..","images","characters",oldImage)): null
                     const response = {
                         status: 200,
                         msg: "Character update successfully",
-                        url: `${req.protocol}://${req.get("host")}/characters/${character.id}`
+                        url: `http://${req.get("host")}/characters/${character.id}`
                     }
                     res.status(200).json(response)
                 })
                 .catch(error => {
-                    req.file ? fs.unlinkSync(path.join(__dirname,"..","uploads","characters",req.file.filename)): null
+                    req.file ? fs.unlinkSync(path.join(__dirname,"..","images","characters",req.file.filename)): null
                     const response = {
                         status: 500,
                         msg: "Internal server error"
@@ -168,7 +168,7 @@ module.exports={
                     res.status(500).json(response)
                 })
             }else{
-                req.file ? fs.unlinkSync(path.join(__dirname,"..","uploads", "characters",req.file.filename)): null
+                req.file ? fs.unlinkSync(path.join(__dirname,"..","images", "characters",req.file.filename)): null
                 const response = {
                     status: 400,
                     msg: "Error when update the character",
@@ -178,7 +178,7 @@ module.exports={
             }
         })
         .catch(error => {
-            req.file ? fs.unlinkSync(path.join(__dirname,"..","uploads", "characters",req.file.filename)): null;
+            req.file ? fs.unlinkSync(path.join(__dirname,"..","images", "characters",req.file.filename)): null;
             const response = {
                 status: 400,
                 msg: "The character doesn't exist"
@@ -193,7 +193,7 @@ module.exports={
                 if(!char){
                     return Promise.reject()
                 }else{
-                    fs.unlinkSync(path.join(__dirname,"..","uploads","characters",char.image));
+                    fs.unlinkSync(path.join(__dirname,"..","images","characters",char.image));
                     db.characters.destroy({
                         where: {
                             id: req.params.charid

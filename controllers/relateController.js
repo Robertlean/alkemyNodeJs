@@ -7,9 +7,9 @@ module.exports = {
     add: (req, res) =>{
         const error = validationResult(req)
         if(errors.isEmpty()){
-            db.characterMovie.create({
-                characterId: req.body.charactetId,
-                movieId: req.body.movieId
+            db.charactersmovies.create({
+                characterId: +req.body.characterId,
+                movieId: +req.body.movieId
             })
             .then(related =>{
                 const response = {
@@ -24,14 +24,13 @@ module.exports = {
                     msg: "Internal server error"
                 }
                 res.status(500).json(response)
-            })
-            
+            })        
         }
     },
     delete: (req, res)=>{
         const errors = validationResult(req);
         if(error.isEmpty()){
-            db.characterMovie.destroy({
+            db.charactersmovies.destroy({
                 where: {
                     [Op.and]: [{characterId: req.body.characterId},{movieId: req.body.movieId}]
                 }

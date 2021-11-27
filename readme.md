@@ -2,8 +2,6 @@
 ## Descripción del proyecto
 Api de Disney creada para el challenge backend en NodeJs para Alkemy Labs. Está Api le permite explorar el mundo de Disney, conocer sus personajes, películas y los géneros de ellos. También permite crear, editar, borrar y buscar los personajes de la franquicia y sus largometrajes.
 
-## Documentación
-La documentación de la Api esta hecha en Swagger la misma se puede visualizar corriendo el proyecto ```npm start``` y yendo a "/api-doc"
 
 ## Tecnólogias
 
@@ -17,8 +15,7 @@ La documentación de la Api esta hecha en Swagger la misma se puede visualizar c
 ```
 ## Uso
 ### Clonar repositorio
-En la terminal de su ordenador debe clonar el repositorio en cualquier carpeta que usted desee con el siguiente comando: ```git clone https://github.com/
-Robertlean/alkemyNodeJs```
+En la terminal de su ordenador debe clonar el repositorio en cualquier carpeta que usted desee con el siguiente comando: ```git clone https://github.com/Robertlean/alkemyNodeJs```
 
 ### Instalar módulos de Node
 Al terminar de clonar el repositorio debe ingresar a la carpeta correspondiente con el comando bash: 
@@ -33,7 +30,7 @@ npm install
 
 ### Ejecutar script de la base de datos
 
-Para ejecutar el script deberás abrir el entorno PgAdmin para PostgreSQL y copiar el script de la base de datos de Disney, que se encuentra dentro de la carpeta database, y pegarlo en la ventana "SQL" y correrlo. 
+Para ejecutar el script deberás abrir el entorno PgAdmin para PostgreSQL y restaurar el archivo con extensión sql, que se encuentra dentro de la carpeta database y correrlo. 
 
 ## Archivo ".env"
 Al tener todo preparado y listo nuestros archivos, falta el momento de configurar los datos para tener todo relacionado a su equipo. Dentro del proyecto encontrará el archivo .envExample, a esté le debes cambiar el nombre a .env y dentro agregarle tus datos correspondiente en cada valor

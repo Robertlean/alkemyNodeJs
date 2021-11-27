@@ -1,5 +1,5 @@
 module.exports = (sequelize,dataTypes) =>{
-    const alias = "charactermovies";
+    const alias = "charactersmovies";
     const cols = {
         id : {
             type : dataTypes.INTEGER,
@@ -18,7 +18,7 @@ module.exports = (sequelize,dataTypes) =>{
     };
     const config = {
         timestamps : false,
-        tableName : "charactermovies"
+        tableName : "charactersmovies"
     };
     const CharacterMovie = sequelize.define(alias,cols,config);
     return CharacterMovie

@@ -15,5 +15,5 @@ module.exports = [
         })
         .catch(()=> Promise.reject("This email is already in use"))
     }),
-    body('password').notEmpty().withMessage("required").isLength({min: 8}).withMessage("Format error")
+    body('password').notEmpty().withMessage("required").isLength({min: 6}).withMessage("Format error")
 ]
